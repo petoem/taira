@@ -17,14 +17,14 @@ data = data.map(() => {
     return Math.random() * genoptions[1];
 });
 
-if(process.argv.includes("CSV")) {
+if (process.argv.includes("CSV")) {
     exporter.CSV(__dirname + "/data.csv", data);
 }
 
-if(process.argv.includes("JSON")) {
+if (process.argv.includes("JSON")) {
     exporter.JSON(__dirname + "/data.json", data);
 }
 
-if(!process.argv.includes("JSON") && !process.argv.includes("CSV")) {
+if (!process.argv.includes("JSON") && !process.argv.includes("CSV")) {
     console.log(data);
 }
