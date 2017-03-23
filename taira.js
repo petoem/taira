@@ -12,15 +12,15 @@ class Taira {
         switch (algorithm || 0) {
             case Taira.ALGORITHMS.AVERAGE:
                 let [size, pass, ...other] = options;
-                Taira[Taira.ALGORITHMS.AVERAGE].apply(null, [array, size||2, pass||1, ...other]);
+                Taira[`_${Taira.ALGORITHMS.AVERAGE}`].apply(null, [array, size || 2, pass || 1, ...other]);
                 break;
             case Taira.ALGORITHMS.MEDIAN:
                 let [size, pass, ...other] = options;
-                Taira[Taira.ALGORITHMS.MEDIAN].apply(null, [array, size||2, pass||1, ...other])
+                Taira[`_${Taira.ALGORITHMS.MEDIAN}`].apply(null, [array, size || 2, pass || 1, ...other])
                 break;
             default:
                 let [size, pass, ...other] = options;
-                Taira[Taira.ALGORITHMS.AVERAGE].apply(null, [array, size||2, pass||1, ...other]);
+                Taira[`_${Taira.ALGORITHMS.AVERAGE}`].apply(null, [array, size || 2, pass || 1, ...other]);
                 break;
         }
         return array;
@@ -32,7 +32,7 @@ class Taira {
      * @param {integer} size The number of neighbor elements to take, results in 2*size+1
      * @param {integer} pass How many times to go over the array
      */
-    static 0(array, size, pass) {
+    static _0(array, size, pass) {
         for (let i = 0; i < pass; i++) {
             array.forEach((value, index) => {
                 let segmentstart = (index - size < 0) ? (index - size) + array.length : index - size;
@@ -52,7 +52,7 @@ class Taira {
      * @param {integer} size The number of neighbor elements to take, results in 2*size+1
      * @param {integer} pass How many times to go over the array
      */
-    static 1(array, size, pass) {
+    static _1(array, size, pass) {
         for (let i = 0; i < pass; i++) {
             array.forEach((value, index) => {
                 let segmentstart = (index - size < 0) ? (index - size) + array.length : index - size;
