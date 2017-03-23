@@ -5,22 +5,19 @@ class Taira {
     /**
      * Smoothen 1D-Array using selected algorithm
      * @param {*} array The input data array (will be overwritten)
-     * @param {Taira.ALGORITHMS} algorithm Takes one of the supported algorithms
+     * @param {Taira.ALGORITHMS} algorithm Takes one of the supported algorithms (defaults to AVERAGE)
      * @param {*} options Parameters for the algorithm
      */
     static smoothen(array, algorithm, ...options) {
+        let [option1, option2, ...other] = options;
         switch (algorithm || 0) {
-            case Taira.ALGORITHMS.AVERAGE:
-                let [size, pass, ...other] = options;
-                Taira[`_${Taira.ALGORITHMS.AVERAGE}`].apply(null, [array, size || 2, pass || 1, ...other]);
-                break;
             case Taira.ALGORITHMS.MEDIAN:
-                let [size, pass, ...other] = options;
-                Taira[`_${Taira.ALGORITHMS.MEDIAN}`].apply(null, [array, size || 2, pass || 1, ...other])
+                Taira[`_${Taira.ALGORITHMS.MEDIAN}`].apply(null, [array, option1 || 2, option2 || 1, ...other]);
                 break;
+            case Taira.ALGORITHMS.GAUSSIAN:
+                Taira[`_${Taira.ALGORITHMS.GAUSSIAN}`].apply(null, [array, option1 || 2, option2 || 2, ...other]);
             default:
-                let [size, pass, ...other] = options;
-                Taira[`_${Taira.ALGORITHMS.AVERAGE}`].apply(null, [array, size || 2, pass || 1, ...other]);
+                Taira[`_${Taira.ALGORITHMS.AVERAGE}`].apply(null, [array, option1 || 2, option2 || 1, ...other]);
                 break;
         }
         return array;
@@ -34,10 +31,10 @@ class Taira {
      */
     static _0(array, size, pass) {
         for (let i = 0; i < pass; i++) {
-            array.forEach((value, index) => {
+            array.forEach((_, index) => {
                 let segmentstart = (index - size < 0) ? (index - size) + array.length : index - size;
                 let sum = 0;
-                for (var a = segmentstart; (index + size + 1) % array.length != a; a = a % array.length) {
+                for (let a = segmentstart; (index + size + 1) % array.length != a; a = a % array.length) {
                     sum += array[a];
                     a++;
                 }
@@ -54,10 +51,10 @@ class Taira {
      */
     static _1(array, size, pass) {
         for (let i = 0; i < pass; i++) {
-            array.forEach((value, index) => {
+            array.forEach((_, index) => {
                 let segmentstart = (index - size < 0) ? (index - size) + array.length : index - size;
                 let median = new Array();
-                for (var a = segmentstart; (index + size + 1) % array.length != a; a = a % array.length) {
+                for (let a = segmentstart; (index + size + 1) % array.length != a; a = a % array.length) {
                     median.push(array[a]);
                     a++;
                 }
@@ -66,15 +63,40 @@ class Taira {
                     if (a > b) { return 1; }
                     return 0;
                 });
-                array[index] = median[parseInt(((size * 2) + 1) / 2)];
+                array[index] = median[Math.trunc(((size * 2) + 1) / 2)];
             });
         }
+    }
+
+    /**
+     * Taira.ALGORITHMS.GAUSSIAN (do not use directly)
+     * @param {*} array The input data array
+     * @param {integer} kernel Size of the kernel array is e.g. 2*kernel+1
+     * @param {*} radius The blur radius (sigma from the gaussian function)
+     */
+    static _2(array, kernel, radius) {
+        let filter = new Float64Array(2 * kernel + 1);
+        let denominator1 = radius * Math.sqrt(2 * Math.PI);
+        let denominator2 = Math.pow(radius, 2) * 2;
+        filter = filter.map((_, index) => Math.exp(-(Math.pow(index - kernel, 2)) / denominator2) / denominator1);
+        let normalizer = filter.reduce((acc, val) => acc + val);
+        let normfilter = filter.map((value) => value / normalizer);
+        array.forEach((_, index) => {
+            let segmentstart = (index - kernel < 0) ? (index - kernel) + array.length : index - kernel;
+            let sum = 0;
+            let c = 0;
+            for (let a = segmentstart; (index + kernel + 1) % array.length != a; a = a % array.length) {
+                sum += array[a++] * normfilter[c++];
+            }
+            array[index] = sum;
+        });
     }
 }
 
 Taira.ALGORITHMS = {
     AVERAGE: 0,
     MEDIAN: 1,
+    GAUSSIAN: 2,
 };
 
 module.exports = Taira;
