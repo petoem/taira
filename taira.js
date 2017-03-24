@@ -46,17 +46,16 @@ class Taira extends Array {
      * @param {integer} pass How many times to go over the array
      */
     static _0(array, size, pass) {
-        for (let i = 0; i < pass; i++) {
-            array.forEach((_, index) => {
-                let segmentstart = (index - size < 0) ? (index - size) + array.length : index - size;
-                let sum = 0;
-                for (let a = segmentstart; (index + size + 1) % array.length != a; a = a % array.length) {
-                    sum += array[a];
-                    a++;
-                }
-                array[index] = sum / ((size * 2) + 1);
-            });
-        }
+        array.forEach((_, index) => {
+            let segmentstart = (index - size < 0) ? (index - size) + array.length : index - size;
+            let sum = 0;
+            for (let a = segmentstart; (index + size + 1) % array.length != a; a = a % array.length) {
+                sum += array[a];
+                a++;
+            }
+            array[index] = sum / ((size * 2) + 1);
+        });
+        if (pass > 1) Taira._0(array, size, --pass);
     }
 
     /**
@@ -66,22 +65,21 @@ class Taira extends Array {
      * @param {integer} pass How many times to go over the array
      */
     static _1(array, size, pass) {
-        for (let i = 0; i < pass; i++) {
-            array.forEach((_, index) => {
-                let segmentstart = (index - size < 0) ? (index - size) + array.length : index - size;
-                let median = new Array();
-                for (let a = segmentstart; (index + size + 1) % array.length != a; a = a % array.length) {
-                    median.push(array[a]);
-                    a++;
-                }
-                median = median.sort((a, b) => {
-                    if (a < b) { return -1; }
-                    if (a > b) { return 1; }
-                    return 0;
-                });
-                array[index] = median[Math.trunc(((size * 2) + 1) / 2)];
+        array.forEach((_, index) => {
+            let segmentstart = (index - size < 0) ? (index - size) + array.length : index - size;
+            let median = new Array();
+            for (let a = segmentstart; (index + size + 1) % array.length != a; a = a % array.length) {
+                median.push(array[a]);
+                a++;
+            }
+            median = median.sort((a, b) => {
+                if (a < b) { return -1; }
+                if (a > b) { return 1; }
+                return 0;
             });
-        }
+            array[index] = median[Math.trunc(((size * 2) + 1) / 2)];
+        });
+        if (pass > 1) Taira._1(array, size, --pass);
     }
 
     /**
