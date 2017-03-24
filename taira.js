@@ -1,7 +1,22 @@
 /**
  * taira - simple smoothing of one dimensional arrays
  */
-class Taira {
+class Taira extends Array {
+    /**
+     * Creates a new Array extended with Taira functions
+     * @param {*} args Takes the same arguments as an Array
+     */
+    constructor(...args) {
+        super(...args);
+    }
+    /**
+     * Smoothen 1D-Array using selected algorithm
+     * @param {*} options Takes one of the supported algorithms (defaults to AVERAGE) and its parameters
+     */
+    smoothen(...options) {
+        return Taira.smoothen(this, ...options);
+    }
+
     /**
      * Smoothen 1D-Array using selected algorithm
      * @param {*} array The input data array (will be overwritten)
@@ -12,12 +27,12 @@ class Taira {
         let [option1, option2, ...other] = options;
         switch (algorithm || 0) {
             case Taira.ALGORITHMS.MEDIAN:
-                Taira[`_${Taira.ALGORITHMS.MEDIAN}`].apply(null, [array, option1 || 2, option2 || 1, ...other]);
+                Taira[`_${Taira.ALGORITHMS.MEDIAN}`](array, option1 || 2, option2 || 1, ...other);
                 break;
             case Taira.ALGORITHMS.GAUSSIAN:
-                Taira[`_${Taira.ALGORITHMS.GAUSSIAN}`].apply(null, [array, option1 || 2, option2 || 2, ...other]);
+                Taira[`_${Taira.ALGORITHMS.GAUSSIAN}`](array, option1 || 2, option2 || 2, ...other);
             default:
-                Taira[`_${Taira.ALGORITHMS.AVERAGE}`].apply(null, [array, option1 || 2, option2 || 1, ...other]);
+                Taira[`_${Taira.ALGORITHMS.AVERAGE}`].apply(array, option1 || 2, option2 || 1, ...other);
                 break;
         }
         return array;
