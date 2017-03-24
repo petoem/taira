@@ -9,5 +9,8 @@
   },
   "repository": "git@github.com:petoem/taira.git",
   "author": "Michael Petö <michael@petoe.me>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "tape": "^4.6.3"
+  }
 }
