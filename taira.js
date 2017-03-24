@@ -25,6 +25,7 @@ class Taira extends Array {
      */
     static smoothen(array, algorithm, ...options) {
         let [option1, option2, ...other] = options;
+        array = array || [];
         switch (algorithm || 0) {
             case Taira.ALGORITHMS.MEDIAN:
                 Taira[`_${Taira.ALGORITHMS.MEDIAN}`](array, option1 || 2, option2 || 1, ...other);
@@ -32,7 +33,7 @@ class Taira extends Array {
             case Taira.ALGORITHMS.GAUSSIAN:
                 Taira[`_${Taira.ALGORITHMS.GAUSSIAN}`](array, option1 || 2, option2 || 2, ...other);
             default:
-                Taira[`_${Taira.ALGORITHMS.AVERAGE}`].apply(array, option1 || 2, option2 || 1, ...other);
+                Taira[`_${Taira.ALGORITHMS.AVERAGE}`](array, option1 || 2, option2 || 1, ...other);
                 break;
         }
         return array;
