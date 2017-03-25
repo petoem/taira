@@ -50,13 +50,17 @@ class Taira extends Array {
         if (array.length <= 2 * size + 1) throw new Error('Array needs to be longer than the box size (2*size+1).');
         let out = new Array();
         array.forEach((_, index) => {
-            let segmentstart = (index - size < 0) ? (index - size) + array.length : index - size;
-            let sum = 0;
-            for (let a = segmentstart; (index + size + 1) % array.length != a; a = a % array.length) {
-                sum += array[a];
-                a++;
+            if ((index - size < 0 || index + size >= array.length) && !circular) {
+                out.push(array[index]);
+            } else {
+                let segmentstart = (index - size < 0) ? (index - size) + array.length : index - size;
+                let sum = 0;
+                for (let a = segmentstart; (index + size + 1) % array.length != a; a = a % array.length) {
+                    sum += array[a];
+                    a++;
+                }
+                out.push(sum / ((size * 2) + 1));
             }
-            out.push(sum / ((size * 2) + 1));
         });
         if (pass > 1) {
             return Taira._0(array, size, --pass);
@@ -77,18 +81,22 @@ class Taira extends Array {
         if (array.length <= 2 * size + 1) throw new Error('Array needs to be longer than the box size (2*size+1).');
         let out = new Array();
         array.forEach((_, index) => {
-            let segmentstart = (index - size < 0) ? (index - size) + array.length : index - size;
-            let median = new Array();
-            for (let a = segmentstart; (index + size + 1) % array.length != a; a = a % array.length) {
-                median.push(array[a]);
-                a++;
+            if ((index - size < 0 || index + size >= array.length) && !circular) {
+                out.push(array[index]);
+            } else {
+                let segmentstart = (index - size < 0) ? (index - size) + array.length : index - size;
+                let median = new Array();
+                for (let a = segmentstart; (index + size + 1) % array.length != a; a = a % array.length) {
+                    median.push(array[a]);
+                    a++;
+                }
+                median = median.sort((a, b) => {
+                    if (a < b) { return -1; }
+                    if (a > b) { return 1; }
+                    return 0;
+                });
+                out.push(median[Math.trunc(((size * 2) + 1) / 2)]);
             }
-            median = median.sort((a, b) => {
-                if (a < b) { return -1; }
-                if (a > b) { return 1; }
-                return 0;
-            });
-            out.push(median[Math.trunc(((size * 2) + 1) / 2)]);
         });
         if (pass > 1) {
             return Taira._1(array, size, --pass);
@@ -115,13 +123,17 @@ class Taira extends Array {
         let normalizer = filter.reduce((acc, val) => acc + val);
         let normfilter = filter.map((value) => value / normalizer);
         array.forEach((_, index) => {
-            let segmentstart = (index - kernel < 0) ? (index - kernel) + array.length : index - kernel;
-            let sum = 0;
-            let c = 0;
-            for (let a = segmentstart; (index + kernel + 1) % array.length != a; a = a % array.length) {
-                sum += array[a++] * normfilter[c++];
+            if ((index - kernel < 0 || index + kernel >= array.length) && !circular) {
+                out.push(array[index]);
+            } else {
+                let segmentstart = (index - kernel < 0) ? (index - kernel) + array.length : index - kernel;
+                let sum = 0;
+                let c = 0;
+                for (let a = segmentstart; (index + kernel + 1) % array.length != a; a = a % array.length) {
+                    sum += array[a++] * normfilter[c++];
+                }
+                out.push(sum);
             }
-            out.push(sum);
         });
         return out;
     }
