@@ -16,5 +16,5 @@ test('Taira smooth', function (t) {
     }, 'Too short array for size=20 throws');
     t.equal(Taira.smoothen([1, 2, 3, 4, 5], Taira.ALGORITHMS.AVERAGE, 1, 1).length, 5, 'Array in/out length');
     t.deepLooseEqual(Taira.from([1, 2, 3, 4, 5]), new Taira(1, 2, 3, 4, 5), 'Convert Array to Taira');
-    t.deepLooseEqual(Taira.smoothen([1, 2, 3, 4, 5], Taira.ALGORITHMS.AVERAGE, 1, 1), [ 2.6666666666666665, 2, 3, 4, 3.3333333333333335 ], 'Expected output');
+    t.deepLooseEqual(Taira.smoothen([1, 2, 3, 4, 5], Taira.ALGORITHMS.AVERAGE, 1, 1), [ 1, 2, 3, 4, 5 ], 'Expected output');
 });
