@@ -26,15 +26,15 @@ class Taira extends Array {
      * @throws Will throw an error if 2*size+1>=array.length for AVERAGE,MEDIAN and GAUSSIAN algorithm
      */
     static smoothen(array, algorithm, ...options) {
-        let [option1, option2, option3,...other] = options;
+        let [option1, option2, option3, ...other] = options;
         array = array || [];
         switch (algorithm || 0) {
             case Taira.ALGORITHMS.MEDIAN:
-                return Taira[`_${Taira.ALGORITHMS.MEDIAN}`](array, option1 || 2, option2 || 1, ...other);
+                return Taira._median(array, option1 || 2, option2 || 1, option3, ...other);
             case Taira.ALGORITHMS.GAUSSIAN:
-                return Taira[`_${Taira.ALGORITHMS.GAUSSIAN}`](array, option1 || 2, option2 || 2, ...other);
+                return Taira._gaussian(array, option1 || 2, option2 || 2, option3, ...other);
             default:
-                return Taira[`_${Taira.ALGORITHMS.AVERAGE}`](array, option1 || 2, option2 || 1, ...other);
+                return Taira._average(array, option1 || 2, option2 || 1, option3, ...other);
         }
     }
 
@@ -43,9 +43,10 @@ class Taira extends Array {
      * @param {*} array The input data array
      * @param {integer} size The number of neighbor elements to take, results in 2*size+1
      * @param {integer} pass How many times to go over the array
+     * @param {boolean} circular Joins beginning and end of array, to make the array circular
      * @returns {*} Array calculated with Taira.ALGORITHMS.AVERAGE
      */
-    static _0c(array, size, pass) {
+    static _average(array, size, pass, circular) {
         if (array.length <= 2 * size + 1) throw new Error('Array needs to be longer than the box size (2*size+1).');
         let out = new Array();
         array.forEach((_, index) => {
@@ -69,9 +70,10 @@ class Taira extends Array {
      * @param {*} array The input data array
      * @param {integer} size The number of neighbor elements to take, results in 2*size+1
      * @param {integer} pass How many times to go over the array
+     * @param {boolean} circular Joins beginning and end of array, to make the array circular
      * @returns {*} Array calculated with Taira.ALGORITHMS.MEDIAN
      */
-    static _1c(array, size, pass) {
+    static _median(array, size, pass, circular) {
         if (array.length <= 2 * size + 1) throw new Error('Array needs to be longer than the box size (2*size+1).');
         let out = new Array();
         array.forEach((_, index) => {
@@ -100,8 +102,10 @@ class Taira extends Array {
      * @param {*} array The input data array
      * @param {integer} kernel Size of the kernel array is e.g. 2*kernel+1
      * @param {*} radius The blur radius (sigma from the gaussian function)
+     * @param {boolean} circular Joins beginning and end of array, to make the array circular
+     * @returns {*} Array calculated with Taira.ALGORITHMS.GAUSSIAN
      */
-    static _2c(array, kernel, radius) {
+    static _gaussian(array, kernel, radius, circular) {
         if (array.length <= 2 * kernel + 1) throw new Error('Array needs to be longer than the kernel size (2*size+1).');
         let out = new Array();
         let filter = new Float64Array(2 * kernel + 1);
