@@ -19,9 +19,10 @@ class Taira extends Array {
 
     /**
      * Smoothen 1D-Array using selected algorithm
-     * @param {*} array The input data array (will be overwritten)
+     * @param {*} array The input data array (values will be overwritten)
      * @param {Taira.ALGORITHMS} algorithm Takes one of the supported algorithms (defaults to AVERAGE)
      * @param {*} options Parameters for the algorithm
+     * @throws Will throw an error if 2*size+1>=array.length for AVERAGE,MEDIAN and GAUSSIAN algorithm
      */
     static smoothen(array, algorithm, ...options) {
         let [option1, option2, ...other] = options;
@@ -32,6 +33,7 @@ class Taira extends Array {
                 break;
             case Taira.ALGORITHMS.GAUSSIAN:
                 Taira[`_${Taira.ALGORITHMS.GAUSSIAN}`](array, option1 || 2, option2 || 2, ...other);
+                break;
             default:
                 Taira[`_${Taira.ALGORITHMS.AVERAGE}`](array, option1 || 2, option2 || 1, ...other);
                 break;
@@ -46,6 +48,7 @@ class Taira extends Array {
      * @param {integer} pass How many times to go over the array
      */
     static _0(array, size, pass) {
+        if (array.length <= 2 * size + 1) throw new Error('Array needs to be longer than the box size (2*size+1).');
         array.forEach((_, index) => {
             let segmentstart = (index - size < 0) ? (index - size) + array.length : index - size;
             let sum = 0;
@@ -65,6 +68,7 @@ class Taira extends Array {
      * @param {integer} pass How many times to go over the array
      */
     static _1(array, size, pass) {
+        if (array.length <= 2 * size + 1) throw new Error('Array needs to be longer than the box size (2*size+1).');
         array.forEach((_, index) => {
             let segmentstart = (index - size < 0) ? (index - size) + array.length : index - size;
             let median = new Array();
@@ -89,6 +93,7 @@ class Taira extends Array {
      * @param {*} radius The blur radius (sigma from the gaussian function)
      */
     static _2(array, kernel, radius) {
+        if (array.length <= 2 * kernel + 1) throw new Error('Array needs to be longer than the kernel size (2*size+1).');
         let filter = new Float64Array(2 * kernel + 1);
         let denominator1 = radius * Math.sqrt(2 * Math.PI);
         let denominator2 = Math.pow(radius, 2) * 2;
