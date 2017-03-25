@@ -20,18 +20,19 @@ let arr = [1, 2, 10, 4, 5, 6];
 * @returns {*} The smoothen input array
 */
 let foo = Taira.smoothen(arr, Taira.ALGORITHMS.AVERAGE, 1, 1, false);
-
-console.log(foo);
+console.log(foo); // [ 1, 4.333333333333333, 5.333333333333333, 6.333333333333333, 5, 6 ]
 
 // ... and the same for median filtering
-Taira.smoothen(arr, Taira.ALGORITHMS.MEDIAN, 2, 1, false);
+foo = Taira.smoothen(arr, Taira.ALGORITHMS.MEDIAN, 2, 1, false);
+console.log(`${arr} => ${foo}`); // [1, 2, 10, 4, 5, 6] => [ 1, 2, 4, 5, 5, 6 ]
 
 /*
 * ... and gaussian smoothing.
 * First integer is the size of the kernel that will be filled with values from a Gaussian distribution.
 * Last parameter is the intensity (sigma) of the distribution.
 */
-Taira.smoothen(arr, Taira.ALGORITHMS.GAUSSIAN, 2, 1, false);
+foo = Taira.smoothen(arr, Taira.ALGORITHMS.GAUSSIAN, 2, 0.65, false);
+console.log(`${arr} => ${foo}`); // [ 1, 2, 10, 4, 5, 6 ] => [ 1, 2, 7.294375204741146, 5.315049255808814, 5, 6 ]
 ```
 
 ## Extras
