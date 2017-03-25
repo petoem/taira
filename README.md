@@ -1,5 +1,8 @@
 # taira
-simple smoothing of one dimensional arrays
+simple smoothing of one dimensional arrays  
+
+[![Travis](https://img.shields.io/travis/petoem/taira.svg?style=flat-square)](https://travis-ci.org/petoem/taira)  
+[![NPM](https://nodei.co/npm/taira.png?downloads=true)](https://www.npmjs.com/package/taira)
 
 ## About
 Taira enables smoothing of arrays that contain numerical values, using average (mean), median and gaussian filter.

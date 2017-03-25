@@ -1,13 +1,22 @@
 {
   "name": "taira",
   "version": "1.0.0",
+  "private": false,
   "description": "simple smoothing of one dimensional arrays",
+  "keywords": [
+    "array",
+    "smooth",
+    "average",
+    "median",
+    "taira"
+  ],
   "main": "taira.js",
   "scripts": {
     "test": "node test/test.js",
     "generate-data": "node test/generate.js 100 40"
   },
   "repository": "git@github.com:petoem/taira.git",
+  "homepage": "https://github.com/petoem/taira",
   "author": "Michael Petö <michael@petoe.me>",
   "license": "MIT",
   "devDependencies": {
