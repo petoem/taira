@@ -1,7 +1,7 @@
 # taira
 simple smoothing of one dimensional arrays  
 
-[![npm version](https://badge.fury.io/js/taira@2x.png)](https://badge.fury.io/js/taira)
+[![GitHub release](https://img.shields.io/github/release/petoem/taira.svg?style=flat-square)](https://github.com/petoem/taira/releases)
 [![Travis](https://img.shields.io/travis/petoem/taira.svg?style=flat-square)](https://travis-ci.org/petoem/taira)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/petoem/taira/blob/master/LICENSE)  
 
