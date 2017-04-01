@@ -15,6 +15,9 @@
     "test": "standard && node test/test.js",
     "generate-data": "node test/generate.js 100 40"
   },
+  "engines": {
+    "node": ">=6.0.0"
+  },
   "repository": "git@github.com:petoem/taira.git",
   "homepage": "https://github.com/petoem/taira",
   "author": "Michael Petö <michael@petoe.me>",
