@@ -24,7 +24,7 @@ let arr = [1, 2, 10, 4, 5, 6]
 * @param {integer} size How many elements before and after (e.g. size=2, means a kernel of 2*size+1)
 * @param {integer} pass How often to go over the array
 * @param {boolean} circular Joins beginning and end of array, to make the array circular
-* @returns {*} The smoothen input array
+* @returns {Taira} The smooth array
 */
 let foo = Taira.smoothen(arr, Taira.ALGORITHMS.AVERAGE, 1, 1, false)
 console.log(foo) // [ 1, 4.333333333333333, 5.333333333333333, 6.333333333333333, 5, 6 ]

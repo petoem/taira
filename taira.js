@@ -15,7 +15,7 @@ class Taira extends Array {
    * @param {*} array The input data array
    * @param {Taira.ALGORITHMS} algorithm Takes one of the supported algorithms (defaults to AVERAGE)
    * @param {*} options Parameters for the algorithm
-   * @returns {*} New smooth array
+   * @returns {Taira} New smooth array
    * @throws Will throw an error if 2*size+1>=array.length for AVERAGE,MEDIAN and GAUSSIAN algorithm
    */
   static smoothen (array, algorithm, ...options) {
@@ -41,7 +41,7 @@ class Taira extends Array {
    */
   static _average (array, size, pass, circular) {
     if (array.length <= 2 * size + 1) throw new Error('Array needs to be longer than the box size (2*size+1).')
-    let out = []
+    let out = new Taira()
     array.forEach((_, index) => {
       if ((index - size < 0 || index + size >= array.length) && !circular) {
         out.push(array[index])
@@ -73,7 +73,7 @@ class Taira extends Array {
    */
   static _median (array, size, pass, circular) {
     if (array.length <= 2 * size + 1) throw new Error('Array needs to be longer than the box size (2*size+1).')
-    let out = []
+    let out = new Taira()
     array.forEach((_, index) => {
       if ((index - size < 0 || index + size >= array.length) && !circular) {
         out.push(array[index])
@@ -114,7 +114,7 @@ class Taira extends Array {
    */
   static _gaussian (array, kernel, radius, circular) {
     if (array.length <= 2 * kernel + 1) throw new Error('Array needs to be longer than the kernel size (2*size+1).')
-    let out = []
+    let out = new Taira()
     let filter = new Float64Array(2 * kernel + 1)
     let denominator1 = radius * Math.sqrt(2 * Math.PI)
     let denominator2 = Math.pow(radius, 2) * 2
