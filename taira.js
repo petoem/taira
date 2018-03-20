@@ -57,7 +57,7 @@ class Taira extends Array {
       }
     })
     if (pass > 1) {
-      return Taira._0(array, size, --pass)
+      return Taira._average(array, size, --pass)
     } else {
       return out
     }
@@ -98,7 +98,7 @@ class Taira extends Array {
       }
     })
     if (pass > 1) {
-      return Taira._1(array, size, --pass)
+      return Taira._median(array, size, --pass)
     } else {
       return out
     }
