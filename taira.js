@@ -19,7 +19,7 @@ class Taira extends Array {
    * @throws Will throw an error if 2*size+1>=array.length for AVERAGE,MEDIAN and GAUSSIAN algorithm
    */
   static smoothen (array, algorithm, ...options) {
-    let [option1, option2, option3, ...other] = options
+    const [option1, option2, option3, ...other] = options
     array = array || []
     switch (algorithm || 0) {
       case Taira.ALGORITHMS.MEDIAN:
@@ -41,12 +41,12 @@ class Taira extends Array {
    */
   static _average (array, size, pass, circular) {
     if (array.length <= 2 * size + 1) throw new Error('Array needs to be longer than the box size (2*size+1).')
-    let out = new Taira()
+    const out = new Taira()
     array.forEach((_, index) => {
       if ((index - size < 0 || index + size >= array.length) && !circular) {
         out.push(array[index])
       } else {
-        let segmentstart = (index - size < 0) ? (index - size) + array.length : index - size
+        const segmentstart = (index - size < 0) ? (index - size) + array.length : index - size
         let sum = 0
         for (let a = segmentstart;
           (index + size + 1) % array.length !== a; a = a % array.length) {
@@ -73,12 +73,12 @@ class Taira extends Array {
    */
   static _median (array, size, pass, circular) {
     if (array.length <= 2 * size + 1) throw new Error('Array needs to be longer than the box size (2*size+1).')
-    let out = new Taira()
+    const out = new Taira()
     array.forEach((_, index) => {
       if ((index - size < 0 || index + size >= array.length) && !circular) {
         out.push(array[index])
       } else {
-        let segmentstart = (index - size < 0) ? (index - size) + array.length : index - size
+        const segmentstart = (index - size < 0) ? (index - size) + array.length : index - size
         let median = []
         for (let a = segmentstart;
           (index + size + 1) % array.length !== a; a = a % array.length) {
@@ -114,18 +114,18 @@ class Taira extends Array {
    */
   static _gaussian (array, kernel, radius, circular) {
     if (array.length <= 2 * kernel + 1) throw new Error('Array needs to be longer than the kernel size (2*size+1).')
-    let out = new Taira()
+    const out = new Taira()
     let filter = new Float64Array(2 * kernel + 1)
-    let denominator1 = radius * Math.sqrt(2 * Math.PI)
-    let denominator2 = Math.pow(radius, 2) * 2
+    const denominator1 = radius * Math.sqrt(2 * Math.PI)
+    const denominator2 = Math.pow(radius, 2) * 2
     filter = filter.map((_, index) => Math.exp(-(Math.pow(index - kernel, 2)) / denominator2) / denominator1)
-    let normalizer = filter.reduce((acc, val) => acc + val)
-    let normfilter = filter.map((value) => value / normalizer)
+    const normalizer = filter.reduce((acc, val) => acc + val)
+    const normfilter = filter.map((value) => value / normalizer)
     array.forEach((_, index) => {
       if ((index - kernel < 0 || index + kernel >= array.length) && !circular) {
         out.push(array[index])
       } else {
-        let segmentstart = (index - kernel < 0) ? (index - kernel) + array.length : index - kernel
+        const segmentstart = (index - kernel < 0) ? (index - kernel) + array.length : index - kernel
         let sum = 0
         let c = 0
         for (let a = segmentstart;

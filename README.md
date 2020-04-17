@@ -2,7 +2,7 @@
 simple smoothing of one dimensional arrays  
 
 [![GitHub release](https://img.shields.io/github/release/petoem/taira.svg?style=flat-square)](https://github.com/petoem/taira/releases)
-[![Travis](https://img.shields.io/travis/petoem/taira.svg?style=flat-square)](https://travis-ci.org/petoem/taira)
+[![CI](https://github.com/petoem/taira/workflows/CI/badge.svg?branch=master)](https://github.com/petoem/taira/actions)
 [![Standard - JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg?style=flat-square)](https://standardjs.com)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/petoem/taira/blob/master/LICENSE)  
 

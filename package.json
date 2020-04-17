@@ -16,14 +16,14 @@
     "generate-data": "node test/generate.js 100 40"
   },
   "engines": {
-    "node": ">=6.0.0"
+    "node": ">=12.0.0"
   },
   "repository": "git@github.com:petoem/taira.git",
   "homepage": "https://github.com/petoem/taira",
   "author": "Michael Petö <michael@petoe.me>",
   "license": "MIT",
   "devDependencies": {
-    "standard": "^12.0.1",
-    "tape": "^4.10.2"
+    "standard": "^14.3.3",
+    "tape": "^4.13.2"
   }
 }

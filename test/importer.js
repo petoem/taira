@@ -6,6 +6,6 @@ module.exports.CSV = function (path) {
 }
 
 module.exports.JSON = function (path) {
-  let data = JSON.parse(fs.readFileSync(path, 'utf8'))
+  const data = JSON.parse(fs.readFileSync(path, 'utf8'))
   return new Float64Array(Object.keys(data).map((val) => data[val]))
 }
