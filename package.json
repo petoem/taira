@@ -1,6 +1,6 @@
 {
   "name": "taira",
-  "version": "3.2.1",
+  "version": "3.2.2",
   "private": false,
   "description": "simple smoothing of one dimensional arrays",
   "keywords": [
