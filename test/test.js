@@ -18,8 +18,8 @@ test('average', function (t) {
     Taira.smoothen([1, 2, 4, 5], Taira.ALGORITHMS.AVERAGE, 20, 1)
   }, 'too short array for size=20 throws')
   t.equal(Taira.smoothen([1, 2, 3, 4, 5], Taira.ALGORITHMS.AVERAGE, 1, 1).length, 5, 'returned array length equals input array length')
-  t.deepLooseEqual(Taira.smoothen([1, 2, 3, 4, 5], Taira.ALGORITHMS.AVERAGE, 1, 1), [1, 2, 3, 4, 5], 'returns expected output')
-  t.deepLooseEqual(Taira.smoothen([1, 2, 3, 4, 5], Taira.ALGORITHMS.AVERAGE, 1, 3), [1, 2, 3, 4, 5], 'smoothen multiple times')
+  t.deepLooseEqual(Taira.smoothen([1, 2, 6, 4, 5], Taira.ALGORITHMS.AVERAGE, 1, 1), [1, 3, 4, 5, 5], 'returns expected output')
+  t.notDeepLooseEqual(Taira.smoothen([1, 2, 6, 4, 5], Taira.ALGORITHMS.AVERAGE, 1, 3), [1, 3, 4, 5, 5], 'smoothen multiple times')
 })
 
 test('median', function (t) {
@@ -34,8 +34,8 @@ test('median', function (t) {
     Taira.smoothen([1, 2, 4, 5], Taira.ALGORITHMS.MEDIAN, 20, 1)
   }, 'too short array for size=20 throws')
   t.equal(Taira.smoothen([1, 2, 3, 4, 5], Taira.ALGORITHMS.MEDIAN, 1, 1).length, 5, 'returned array length equals input array length')
-  t.deepLooseEqual(Taira.smoothen([1, 2, 10, 4, 5, 6], Taira.ALGORITHMS.MEDIAN, 2, 1), [1, 2, 4, 5, 5, 6], 'returns expected output')
-  t.deepLooseEqual(Taira.smoothen([1, 2, 10, 4, 5, 6], Taira.ALGORITHMS.MEDIAN, 1, 2), [1, 2, 4, 5, 5, 6], 'smoothen multiple times')
+  t.deepLooseEqual(Taira.smoothen([1, 2, 10, 4, 7, 6], Taira.ALGORITHMS.MEDIAN, 1, 1), [1, 2, 4, 7, 6, 6], 'returns expected output')
+  t.deepLooseEqual(Taira.smoothen([1, 2, 10, 4, 7, 6], Taira.ALGORITHMS.MEDIAN, 1, 2), [1, 2, 4, 6, 6, 6], 'smoothen multiple times')
 })
 
 test('gaussian', function (t) {
